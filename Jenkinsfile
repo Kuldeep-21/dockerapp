@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = "coder21/dockerapp"
-        registryCrendential = 'dockerhub_id'
+        registryCrendential = 'Dockerhub'
         dockerImage = ''
     }
     
@@ -14,13 +14,13 @@ pipeline {
         }
         stage('Building Image'){
             steps {
-                dockerImage= docker.build registry + ":$BUILD_NUMBER"
+                sh "docker build -t coder21/dokcerapp ."
             }
         }
-        stage('Deploy'){
+        stage('pushing Image to DockerHub'){
             steps {
                 docker.withRegistry('',registryCredential){
-                    dockerImage.push()
+                    sh "docker push coder21/dockerapp"
                 }
             }
         }
